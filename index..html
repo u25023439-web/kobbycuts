@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kobby Cuts – Barber Shop | Hatfield, Pretoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --black: #0a0a0a; --cream: #f5f0e8; --gold: #c9a84c; --gold-light: #e8c97e;
+    --red: #8b1a1a; --dark-gray: #1a1a1a; --mid-gray: #2a2a2a; --text-muted: #888;
+    --wa-green: #25D366;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Barlow', sans-serif; background: var(--black); color: var(--cream); overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,10,0.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.1em; color: var(--gold); }
+  .nav-logo span { color: var(--cream); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-book { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.55rem 1.4rem; border: 1px solid var(--gold); color: var(--gold); background: transparent; cursor: pointer; transition: all 0.2s; }
+  .nav-book:hover { background: var(--gold); color: var(--black); }
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 6rem 3rem 4rem; position: relative; background: var(--black); overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px); }
+  .hero-stripe { position: absolute; top: 0; right: 8rem; width: 6px; height: 100%; background: repeating-linear-gradient(to bottom, var(--red) 0px, var(--red) 40px, var(--cream) 40px, var(--cream) 80px, var(--dark-gray) 80px, var(--dark-gray) 120px); opacity: 0.7; }
+  .hero-content { max-width: 680px; position: relative; }
+  .hero-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+  .hero-tag::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 12vw, 9rem); line-height: 0.9; letter-spacing: 0.02em; color: var(--cream); margin-bottom: 1.5rem; }
+  .hero-title .gold { color: var(--gold); }
+  .hero-sub { font-size: 1rem; font-weight: 300; line-height: 1.7; color: rgba(245,240,232,0.65); max-width: 420px; margin-bottom: 2.5rem; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 2.2rem; background: var(--gold); color: var(--black); border: none; cursor: pointer; font-weight: 600; transition: background 0.2s; text-decoration: none; display: inline-block; }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-outline { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 2.2rem; background: transparent; color: var(--cream); border: 1px solid rgba(245,240,232,0.3); cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+  .btn-outline:hover { border-color: var(--cream); }
+  .hero-stats { position: absolute; bottom: 3rem; right: 3rem; display: flex; gap: 3rem; }
+  .stat-item { text-align: center; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.3rem; }
+  section { padding: 6rem 3rem; }
+  .section-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem; }
+  .section-tag::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: 0.03em; line-height: 1; margin-bottom: 0.5rem; }
+  #services { background: var(--dark-gray); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.15); }
+  .service-card { background: var(--dark-gray); padding: 2rem 1.8rem; transition: background 0.2s; cursor: default; }
+  .service-card:hover { background: var(--mid-gray); }
+  .service-icon { font-size: 1.8rem; margin-bottom: 1.2rem; display: block; line-height: 1; }
+  .service-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--cream); margin-bottom: 0.5rem; }
+  .service-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.2rem; }
+  .service-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold); }
+  .service-price span { font-family: 'Barlow', sans-serif; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .service-book-btn { display: inline-block; margin-top: 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.5rem 1rem; background: var(--wa-green); color: #fff; text-decoration: none; font-weight: 600; transition: opacity 0.2s; }
+  .service-book-btn:hover { opacity: 0.85; }
+
+  /* BOOKING */
+  #booking { background: var(--black); }
+  .booking-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .booking-left p { font-size: 0.95rem; color: rgba(245,240,232,0.6); line-height: 1.8; margin: 1.5rem 0 2rem; }
+  .booking-feature { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; font-size: 0.85rem; color: rgba(245,240,232,0.7); }
+  .booking-feature::before { content: ''; width: 6px; height: 6px; background: var(--gold); flex-shrink: 0; }
+  .booking-form { background: var(--dark-gray); padding: 2.5rem; border: 1px solid rgba(201,168,76,0.2); }
+  .form-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: var(--cream); margin-bottom: 0.6rem; }
+  .form-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.8rem; line-height: 1.5; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
+  .form-group input, .form-group select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.2); color: var(--cream); padding: 0.75rem 1rem; font-family: 'Barlow', sans-serif; font-size: 0.9rem; outline: none; appearance: none; transition: border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--dark-gray); color: var(--cream); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .btn-whatsapp {
+    width: 100%; margin-top: 1.5rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
+    padding: 1.1rem;
+    background: var(--wa-green); color: #fff;
+    border: none; cursor: pointer;
+    transition: opacity 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  }
+  .btn-whatsapp:hover { opacity: 0.88; }
+  .wa-icon { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+
+  #gallery { background: var(--dark-gray); }
+  .gallery-header { margin-bottom: 3rem; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .gallery-item { aspect-ratio: 1; background: var(--mid-gray); position: relative; overflow: hidden; cursor: pointer; }
+  .gallery-item:first-child { grid-column: 1 / 3; grid-row: 1 / 3; aspect-ratio: unset; }
+  .gallery-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.5rem; background: var(--mid-gray); transition: background 0.3s; min-height: 140px; }
+  .gallery-item:hover .gallery-inner { background: rgba(201,168,76,0.12); }
+  .gallery-item:first-child .gallery-inner { min-height: 320px; }
+  .gallery-placeholder { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em; color: rgba(245,240,232,0.2); text-align: center; }
+  .gallery-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay-text { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  #contact { background: var(--black); }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-info-item { display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; }
+  .contact-icon { width: 44px; height: 44px; flex-shrink: 0; border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .contact-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .contact-value { font-size: 0.95rem; color: var(--cream); line-height: 1.6; }
+  .contact-value a { color: var(--gold); text-decoration: none; }
+  .contact-value a:hover { text-decoration: underline; }
+  .hours-grid { background: var(--dark-gray); padding: 2rem; border: 1px solid rgba(201,168,76,0.15); }
+  .hours-title { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .hours-row { display: flex; justify-content: space-between; padding: 0.55rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-day { color: rgba(245,240,232,0.6); }
+  .hours-time { color: var(--cream); font-weight: 500; }
+  .hours-closed { color: var(--text-muted); }
+
+  /* FLOATING WA BUTTON */
+  .wa-float {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--wa-green);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+  .wa-float:hover { transform: scale(1.1); }
+  .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+
+  footer { background: var(--dark-gray); padding: 2.5rem 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-top: 1px solid rgba(201,168,76,0.15); }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--gold); }
+  .footer-copy { font-size: 0.78rem; color: var(--text-muted); }
+  .footer-social { display: flex; gap: 1.2rem; }
+  .social-link { width: 36px; height: 36px; border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; color: var(--text-muted); text-decoration: none; font-size: 0.75rem; transition: all 0.2s; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.05em; }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .hero-stats { position: static; margin-top: 3rem; }
+    .booking-inner, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-column: 1 / 3; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<a class="wa-float" href="https://wa.me/27692473002?text=Hi%20Kobby%2C%20I%27d%20like%20to%20book%20a%20cut%20%E2%9C%82%EF%B8%8F" target="_blank" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<nav>
+  <div class="nav-logo">Kobby<span> Cuts</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-stripe"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Hatfield, Pretoria</div>
+    <h1 class="hero-title">Kobby<br><span class="gold">Cuts.</span></h1>
+    <p class="hero-sub">Precision fades. Clean lines. Every cut tells a story — yours should hit different. Walk in looking good, walk out looking legendary.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="https://wa.me/27692473002?text=Hi%20Kobby%2C%20I%27d%20like%20to%20book%20a%20cut%20%E2%9C%82%EF%B8%8F" target="_blank">Book on WhatsApp</a>
+      <a class="btn-outline" href="#services">View Services</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Happy Clients</div></div>
+    <div class="stat-item"><div class="stat-num">8+</div><div class="stat-label">Years Cutting</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Fresh Vibes</div></div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-tag">What We Do</div>
+      <h2 class="section-title">Our Services</h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">✂️</span>
+      <div class="service-name">Signature Cut</div>
+      <div class="service-desc">Full haircut with fade, shape-up, and precision styling. Our most popular service.</div>
+      <div class="service-price">R150 <span>/ session</span></div>
+      <a class="service-book-btn" href="https://wa.me/27692473002?text=Hi%20Kobby%2C%20I%27d%20like%20to%20book%20a%20Signature%20Cut%20(R150)%20%E2%9C%82%EF%B8%8F" target="_blank">📲 Book This</a>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🪒</span>
+      <div class="service-name">Beard Trim & Shape</div>
+      <div class="service-desc">Clean line-up, sculpt, and shape for any beard style — stubble to full.</div>
+      <div class="service-price">R80 <span>/ session</span></div>
+      <a class="service-book-btn" href="https://wa.me/27692473002?text=Hi%20Kobby%2C%20I%27d%20like%20to%20book%20a%20Beard%20Trim%20%26%20Shape%20(R80)%20%F0%9F%AA%92" target="_blank">📲 Book This</a>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">💈</span>
+      <div class="service-name">Cut + Beard Combo</div>
+      <div class="service-desc">The full package. Look sharp from top to jaw — best value on the menu.</div>
+      <div class="service-price">R200 <span>/ session</span></div>
+      <a class="service-book-btn" href="https://wa.me/27692473002?text=Hi%20Kobby%2C%20I%27d%20like%20to%20book%20the%20Cut%20%2B%20Beard%20Combo%20(R200)%20%F0%9F%92%88" target="_blank">📲 Book This</a>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">⚡</span>
+      <div class="service-name">Shape-Up / Edge</div>
+      <div class="service-desc">Clean up your hairline, neckline, and edges for a sharp fresh look fast.</div>
+      <div class="service-price">R60 <span>/ session</span></div>
+      <a class="service-book-btn" href="https://wa.me/27692473002?text=Hi%20Kobby%2C%20I%27d%20like%20to%20book%20a%20Shape-Up%20%2F%20Edge%20(R60)%20%E2%9A%A1" target="_blank">📲 Book This</a>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">👦</span>
+      <div class="service-name">Kids Cut</div>
+      <div class="service-desc">Patience and precision for the young kings. Age 12 and under.</div>
+      <div class="service-price">R100 <span>/ session</span></div>
+      <a class="service-book-btn" href="https://wa.me/27692473002?text=Hi%20Kobby%2C%20I%27d%20like%20to%20book%20a%20Kids%20Cut%20(R100)%20%F0%9F%91%A6" target="_blank">📲 Book This</a>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">👑</span>
+      <div class="service-name">VIP Treatment</div>
+      <div class="service-desc">Premium cut + hot towel + beard + styling. The royal treatment — no rush.</div>
+      <div class="service-price">R280 <span>/ session</span></div>
+      <a class="service-book-btn" href="https://wa.me/27692473002?text=Hi%20Kobby%2C%20I%27d%20like%20to%20book%20the%20VIP%20Treatment%20(R280)%20%F0%9F%91%91" target="_blank">📲 Book This</a>
+    </div>
+  </div>
+</section>
+
+<section id="booking">
+  <div class="booking-inner">
+    <div class="booking-left">
+      <div class="section-tag">Secure Your Spot</div>
+      <h2 class="section-title">Book an Appointment</h2>
+      <p>No stress. Just fill in your details, tap the WhatsApp button and your booking message gets sent straight to Kobby. He'll confirm your time and you're good to go.</p>
+      <div class="booking-feature">Instant WhatsApp confirmation</div>
+      <div class="booking-feature">Same-day appointments available</div>
+      <div class="booking-feature">No deposit required</div>
+      <div class="booking-feature">Rescheduling no problem — just give us notice</div>
+    </div>
+    <div class="booking-form">
+      <div class="form-title">Reserve Your Chair</div>
+      <div class="form-subtitle">Fill in your details below — your info will be sent directly to Kobby via WhatsApp.</div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" id="fname" placeholder="Your name"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" id="lname" placeholder="Your surname"></div>
+      </div>
+      <div class="form-group"><label>Your Phone Number</label><input type="tel" id="cphone" placeholder="+27 71 000 0000"></div>
+      <div class="form-group">
+        <label>Service</label>
+        <select id="service">
+          <option value="">— Choose a service —</option>
+          <option>Signature Cut — R150</option>
+          <option>Beard Trim & Shape — R80</option>
+          <option>Cut + Beard Combo — R200</option>
+          <option>Shape-Up / Edge — R60</option>
+          <option>Kids Cut — R100</option>
+          <option>VIP Treatment — R280</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Preferred Date</label><input type="date" id="bdate"></div>
+        <div class="form-group">
+          <label>Preferred Time</label>
+          <select id="btime">
+            <option value="">— Time —</option>
+            <option>08:00</option><option>09:00</option><option>10:00</option>
+            <option>11:00</option><option>12:00</option><option>13:00</option>
+            <option>14:00</option><option>15:00</option><option>16:00</option>
+            <option>17:00</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-whatsapp" onclick="sendWhatsApp()">
+        <svg class="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Send Booking via WhatsApp
+      </button>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="section-tag">The Work</div>
+    <h2 class="section-title">Our Gallery</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><div class="gallery-inner"><div class="gallery-placeholder">📸<br>Feature Cut<br>Add Your Best Work Here</div></div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
+    <div class="gallery-item"><div class="gallery-inner"><div class="gallery-placeholder">📸</div></div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
+    <div class="gallery-item"><div class="gallery-inner"><div class="gallery-placeholder">📸</div></div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
+    <div class="gallery-item"><div class="gallery-inner"><div class="gallery-placeholder">📸</div></div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
+    <div class="gallery-item"><div class="gallery-inner"><div class="gallery-placeholder">📸</div></div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-tag">Find Us</div>
+      <h2 class="section-title">Contact & Location</h2>
+      <br>
+      <div class="contact-info-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Address</div>
+          <div class="contact-value">440 Hilda Street<br>Hatfield, Pretoria<br>0083, South Africa</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label">Phone / WhatsApp</div>
+          <div class="contact-value">
+            <a href="tel:+27692473002">069 247 3002</a><br>
+            <a href="https://wa.me/27692473002?text=Hi%20Kobby%2C%20I%27d%20like%20to%20book%20a%20cut%20%E2%9C%82%EF%B8%8F" target="_blank">Chat on WhatsApp →</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-label">Instagram</div>
+          <div class="contact-value"><a href="#">@kobbycuts</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="hours-grid">
+      <div class="hours-title">Opening Hours</div>
+      <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">08:00 – 18:00</span></div>
+      <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">08:00 – 18:00</span></div>
+      <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">08:00 – 18:00</span></div>
+      <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">08:00 – 18:00</span></div>
+      <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time">08:00 – 18:00</span></div>
+      <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">08:00 – 15:00</span></div>
+      <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-closed">Closed</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Kobby Cuts</div>
+  <div class="footer-copy">© 2026 Kobby Cuts · 440 Hilda Street, Hatfield, Pretoria</div>
+  <div class="footer-social">
+    <a class="social-link" href="#">IG</a>
+    <a class="social-link" href="https://wa.me/27692473002" target="_blank">WA</a>
+    <a class="social-link" href="#">FB</a>
+  </div>
+</footer>
+
+<script>
+  function sendWhatsApp() {
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const cphone = document.getElementById('cphone').value.trim();
+    const service = document.getElementById('service').value;
+    const bdate = document.getElementById('bdate').value;
+    const btime = document.getElementById('btime').value;
+    if (!fname || !cphone || !service || !bdate || !btime) {
+      alert('Please fill in all fields before sending.');
+      return;
+    }
+    const msg = `Hi Kobby! I'd like to book an appointment ✂️\n\n👤 Name: ${fname} ${lname}\n📞 My number: ${cphone}\n💈 Service: ${service}\n📅 Date: ${bdate}\n⏰ Time: ${btime}\n\nPlease confirm my booking. Thanks!`;
+    const url = `https://wa.me/27692473002?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('bdate').setAttribute('min', today);
+</script>
+</body>
+</html>
